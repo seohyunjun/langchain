@@ -213,7 +213,8 @@ class ChatOllama(BaseChatModel):
             Sampling temperature. Ranges from 0.0 to 1.0.
         num_predict: Optional[int]
             Max number of tokens to generate.
-
+        think: Optional[bool]
+            think mode
     See full list of supported init args and their descriptions in the params section.
 
     Instantiate:
@@ -225,6 +226,7 @@ class ChatOllama(BaseChatModel):
                 model = "llama3",
                 temperature = 0.8,
                 num_predict = 256,
+                think = False,
                 # other params ...
             )
 
@@ -390,6 +392,10 @@ class ChatOllama(BaseChatModel):
     """Maximum number of tokens to predict when generating text.
     (Default: 128, -1 = infinite generation, -2 = fill context)"""
 
+    think: Optional[bool] = None
+    """Whether to enable 'think' mode.
+    (Default: False, True = enable advanced reasoning mode, False = normal behavior)"""
+
     repeat_last_n: Optional[int] = None
     """Sets how far back for the model to look back to prevent
     repetition. (Default: 64, 0 = disabled, -1 = num_ctx)"""
@@ -487,6 +493,7 @@ class ChatOllama(BaseChatModel):
                 "num_gpu": self.num_gpu,
                 "num_thread": self.num_thread,
                 "num_predict": self.num_predict,
+                "think": self.think,
                 "repeat_last_n": self.repeat_last_n,
                 "repeat_penalty": self.repeat_penalty,
                 "temperature": self.temperature,
